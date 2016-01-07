@@ -6,30 +6,52 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/07 11:40:14 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/07 16:47:33 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_next_line(int const	fd, char **line)
+static char		*ft_mem_concat(char *dst, char *src)
+{
+	char *res;
+
+	if (!res)
+		return (NULL);
+	res = (ft_strnew(ft_strlen(dst) + ft_strlen(src) + 1));
+	ft_strcat(dst, src);
+	return (res);
+}
+
+static char		get_line(char **line, char **tmp)
+{
+	char *str;
+
+	if ((str = ft_strchr(*tmp, '\n')))
+	{
+		*str = '\0';
+		*line = ft_strdup(*tmp);
+		return (1);
+	}
+	return (0);
+}
+int				get_next_line(int const	fd, char **line)
 {
 	static char *overflow;
 	char		buf[BUFF_SIZE + 1];
 	char		*str;
 	int			ret;
 
-	str = ft_strnew(200);
+	ft_bzero(str, BUFF_SIZE);
 	ft_bzero(buf, BUFF_SIZE);
-	while ((ret = read(fd, buf, BUFF_SIZE)) != 0) // != 0 so not done reading
+	while ((ret = read(fd, buf, BUFF_SIZE)) != 0)
 	{
 		if (ret == -1)
 			return (-1);
-		buf[ret] = '\0'; // fin de chaine apres le dernier caractere lu
+		buf[ret] = '\0';
 		printf("Read %d bytes\n Content = ||%s||\n", ret, buf);
-		//ft_strcpy(str, buf);
-		ft_strcat(str, buf);
+		ft_mem_concat(str, buf);
 	}
-	*line = str; // dire a str de pointer sur line, donc line prendra la valeur de str
+	*line = str;
 	return (0);
 }
