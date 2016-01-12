@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/12 17:44:27 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/12 18:10:01 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static int		ft_get_line(char **line, char *overf)
 
 int				get_next_line(int const	fd, char **line)
 {
-	char *overf;
+	static char *overf;
 	char		buf[BUFF_SIZE + 1];
 	//char		*str;
 	int			ret;
 
-	ft_bzero(overf, BUFF_SIZE);
+	overf = ft_strnew(BUFF_SIZE + 1);
 	ft_bzero(buf, BUFF_SIZE);
 	while ((ret = read(fd, buf, BUFF_SIZE)) != 0) // tant que l'on a pas atteint EOF (= 0)
 	{
@@ -53,6 +53,8 @@ int				get_next_line(int const	fd, char **line)
 		//printf("\nRead %d bytes\n\nContent = ||%s||\n", ret, buf);
 		overf = ft_mem_concat(overf, buf);
 		ft_get_line(line, overf);
+		//ft_putstr("\nContenu de line dans gnl : ");
+		//ft_putstr(*line);
 		printf("\nContenu de line dans gnl : %s\n ", *line);
 		//printf("\nContenu de overf dans gnl : %s\n ", overf);
 	}
