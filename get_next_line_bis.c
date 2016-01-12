@@ -6,57 +6,56 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/12 15:38:02 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/12 17:02:15 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/* gere la memoire des strings lues*/
-/* concatene l'overflow de la premiere lecture avec la prochaine string (de la taille de BUFF_SIZE) jusqu'au premier\n rencontre et ainsi de suite*/
+/* gestion memoire + concatenation */
 
-static int		ft_mem_concat(char *str, char *buf)
+static char		*ft_mem_concat(char *str, char *buf)
 {
-	if (!buf)
-		return (1);
-	ft_strjoin(str, buf);
-	return (0);
+	char *tmp;
+
+	tmp = ft_strnew(BUFF_SIZE + 1);
+	tmp = ft_strjoin(str, buf);
+	return (tmp);
 }
 
-/*  fait un ft_strchr sur le premier \n pour le remplacer par un \0*/
-/* fait pointer *buf sur le premier caractere suivant le \0 (= overflow) */
-/*
-static int		ft_get_line(char **tmp, char **line)
+static int		ft_get_line(char **line, char *str)
 {
-	char *s;
+	char *tmp;
 
-	if ((s = ft_strchr(*tmp, '\n')))
+	if ((tmp = ft_strchr(str, '\n')))
 	{
-		*s = '\0';
-		*line = ft_strdup(*tmp);
-		ft_memove(*tmp, s + 1, ft_strlen(s + 1));
+		*tmp = '\0';
+		*line = ft_strdup(str);
+		ft_memmove(str, tmp + 1, ft_strlen(tmp + 1) + 1);
 		return (1);
 	}
 	return (0);
 }
-*/
+
 int				get_next_line(int const	fd, char **line)
 {
-	static char *overf; // excedent apres le premier \n de la premiere string
-	char		buf[BUFF_SIZE + 1]; // stock la string lu par read
-	char		*str; // pointe sur le premier char de la string lu
-	int			ret; // valeur de ret du read
+	//static char *overf;
+	char		buf[BUFF_SIZE + 1];
+	char		*str;
+	int			ret;
 
-	ft_bzero(buf, BUFF_SIZE);
 	ft_bzero(str, BUFF_SIZE);
-	while ((ret = read(fd, buf, BUFF_SIZE)) != 0) // tant que l'on a pas atteint EOF (\0 = 0)
+	ft_bzero(buf, BUFF_SIZE);
+	while ((ret = read(fd, buf, BUFF_SIZE)) != 0) // tant que l'on a pas atteint EOF (= 0)
 	{
 		if (ret == -1)
-			return(-1);
-		buf[ret] = '\0';
-		printf("\nRead %d bytes\nContent = ||%s||\n", ret, buf);
-		ft_mem_concat(str, buf);
+			return (-1);
+		printf("\nRead %d bytes\n\nContent = ||%s||\n", ret, buf);
+		str = ft_mem_concat(str, buf);
+		ft_get_line(line, str);
+		printf("\nContenu de line dans gnl : %s\n ", *line);
+		printf("\nContenu de str dans gnl : %s\n ", str);
 	}
-	*line = str;
+	//free(str);
 	return (0);
 }
