@@ -12,10 +12,10 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 10
+# define BUFF_SIZE 5
 
 #include "libft/libft.h"
-#include <stdlib.h>
+#include <stdlib.h> //////////////////TEST
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
