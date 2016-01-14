@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/14 14:23:17 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/14 15:44:14 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int				get_next_line(int const fd, char **line)
 			return (1);
 		}
 	}
-	ft_bzero(overf, BUFF_SIZE + 1);
 	*line = str;
 	free(str);
 	str = NULL;
