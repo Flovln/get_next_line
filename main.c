@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 10:20:08 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/07 13:11:56 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/14 14:41:50 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int		main(int ac, char **av)
 	{
 		i = get_next_line(fd, &line);
 		printf("%d || %s\n", i, line);
+	//	ft_strdel(&line);
+	//	break ;
 	}
 	close(fd);
 	return (0);
