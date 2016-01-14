@@ -38,30 +38,30 @@ static int		ft_get_line(char **line, char *buf, char *overf)
 
 int				get_next_line(int const fd, char **line)
 {
-	static char overf[BUFF_SIZE + 1];
+	static char overf[255][BUFF_SIZE + 1];
 	char		buf[BUFF_SIZE + 1];
 	char		*str;
 	int			ret;
 
-	if (ft_get_line(line, overf, overf) == 1)
+	if (ft_get_line(line, overf[fd], overf[fd]) == 1)
 		return (1);
-	str = ft_strdup(overf);
+	str = ft_strdup(overf[fd]);
 	ft_bzero(buf, BUFF_SIZE + 1);
-	ft_bzero(overf, BUFF_SIZE + 1);
+	ft_bzero(overf[fd], BUFF_SIZE + 1);
 	while ((ret = read(fd, buf, BUFF_SIZE)) != 0)
 	{
 		if (ret == -1)
 			return (-1);
 		buf[ret] = '\0';
 		str = ft_mem_concat(str, buf);
-		if (ft_get_line(line, str, overf) == 1)
+		if (ft_get_line(line, str, overf[fd]) == 1)
 		{
 			free(str);
 			str = NULL;
 			return (1);
 		}
 	}
-	ft_bzero(overf, BUFF_SIZE + 1);
+	ft_bzero(overf[fd], BUFF_SIZE + 1);
 	*line = str;
 	free(str);
 	str = NULL;
