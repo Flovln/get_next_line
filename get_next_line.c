@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/13 15:05:30 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/14 14:43:30 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char		*ft_mem_concat(char *str, char *buf)
 	char *tmp;
 
 	tmp = ft_strjoin(str, buf);
+	free(str);
+	str = NULL;
 	return (tmp);
 }
 
@@ -31,7 +33,6 @@ static int		ft_get_line(char **line, char *buf, char *overf)
 		ft_memmove(overf, tmp + 1, ft_strlen(tmp + 1) + 1);
 		return (1);
 	}
-	free (tmp);
 	return (0);
 }
 
@@ -42,7 +43,6 @@ int				get_next_line(int const fd, char **line)
 	char		*str;
 	int			ret;
 
-	//ft_bzero(buf, BUFF_SIZE);
 	if (ft_get_line(line, overf, overf) == 1)
 		return (1);
 	str = ft_strdup(overf);
@@ -54,9 +54,14 @@ int				get_next_line(int const fd, char **line)
 		buf[ret] = '\0';
 		str = ft_mem_concat(str, buf);
 		if (ft_get_line(line, str, overf) == 1)
+		{
+			free(str);
+			str = NULL;
 			return (1);
+		}
 	}
-	*line = ft_strnew(1);
+	*line = str;
 	free(str);
+	str = NULL;
 	return (0);
 }
