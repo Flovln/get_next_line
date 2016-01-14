@@ -43,6 +43,8 @@ int				get_next_line(int const fd, char **line)
 	char		*str;
 	int			ret;
 
+	if (fd < 0)
+		return (-1);
 	if (ft_get_line(line, overf[fd], overf[fd]) == 1)
 		return (1);
 	str = ft_strdup(overf[fd]);
