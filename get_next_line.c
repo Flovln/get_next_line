@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/15 10:35:06 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/15 10:51:18 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static char		*ft_mem_concat(char *str, char *buf)
 	char *tmp;
 
 	tmp = ft_strjoin(str, buf);
-	free(str);
-	str = NULL;
+	ft_strdel(&str); // ft_strdel = fonction qui free puis initialise la memoire a null
 	return (tmp);
 }
 
@@ -57,8 +56,7 @@ int				get_next_line(int const fd, char **line)
 		str = ft_mem_concat(str, buf);
 		if (ft_get_line(line, str, overf[fd]) == 1)
 		{
-			free(str);
-			str = NULL;
+			ft_strdel(&str);
 			return (1);
 		}
 	}
