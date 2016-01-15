@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/14 16:23:56 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/15 10:35:06 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int				get_next_line(int const fd, char **line)
 		return (1);
 	str = ft_strdup(overf[fd]);
 	ft_bzero(buf, BUFF_SIZE + 1);
-	ft_bzero(overf[fd], BUFF_SIZE + 1);
 	while ((ret = read(fd, buf, BUFF_SIZE)) != 0)
 	{
 		if (ret == -1)
@@ -63,9 +62,6 @@ int				get_next_line(int const fd, char **line)
 			return (1);
 		}
 	}
-	ft_bzero(overf[fd], BUFF_SIZE + 1);
 	*line = str;
-	free(str);
-	str = NULL;
 	return (0);
 }
