@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/14 15:44:14 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/14 16:41:42 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,7 @@ int				get_next_line(int const fd, char **line)
 	char		buf[BUFF_SIZE + 1];
 	char		*str;
 	int			ret;
-	/*static int 	num;
-	static t_input save[MAX_FD];
 
-	index = fd % MAX_FD;
-	save[index].overf
-	if (num != fd)
-		ft_bzero(overf, BUFF_SIZE + 1);
-	num = fd;*/
 	if (ft_get_line(line, overf, overf) == 1)
 		return (1);
 	str = ft_strdup(overf);
@@ -58,10 +51,7 @@ int				get_next_line(int const fd, char **line)
 	while ((ret = read(fd, buf, BUFF_SIZE)) != 0)
 	{
 		if (ret == -1)
-		{
-			ft_bzero(overf, BUFF_SIZE + 1);
 			return (-1);
-		}
 		buf[ret] = '\0';
 		str = ft_mem_concat(str, buf);
 		if (ft_get_line(line, str, overf) == 1)
@@ -71,7 +61,8 @@ int				get_next_line(int const fd, char **line)
 			return (1);
 		}
 	}
-	*line = str;
+	ft_bzero(overf, BUFF_SIZE + 1);
+	*line = str; // si on nous passe 1 string sans \n (avec EOF a la fin) alors on la stock directement dans *line,
 	free(str);
 	str = NULL;
 	return (0);
