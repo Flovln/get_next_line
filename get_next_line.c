@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static char		*ft_mem_concat(char *str, char *buf)
 {
 	char *tmp;
 
 	tmp = ft_strjoin(str, buf);
-	ft_strdel(&str); // ft_strdel = fonction qui free puis initialise la memoire a null
+	ft_strdel(&str);
 	return (tmp);
 }
 
