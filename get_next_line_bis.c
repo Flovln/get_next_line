@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static char		*ft_mem_concat(char *str, char *buf)
 {
@@ -47,7 +46,7 @@ int				get_next_line(int const fd, char **line)
 	char		*str;
 	int			ret;
 
-	if (fd < 0)
+	if (fd < 0 || !line)
 		return (-1);
 	if (ft_get_line(line, overf[fd], overf[fd]) == 1)
 		return (1);
@@ -65,7 +64,5 @@ int				get_next_line(int const fd, char **line)
 			return (1);
 		}
 	}
-	//*line = str;
 	return (ft_strlen(*line) != 0);
-	//return (0);
 }
