@@ -6,7 +6,7 @@
 /*   By: fviolin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/30 18:07:22 by fviolin           #+#    #+#             */
-/*   Updated: 2016/01/24 16:11:57 by fviolin          ###   ########.fr       */
+/*   Updated: 2016/01/25 16:42:27 by fviolin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static int		ft_get_line(char **line, char *buf, char *overf)
 
 int				get_next_line(int const fd, char **line)
 {
-	static char overf[255][BUFF_SIZE + 1];
+	static char overf[256][BUFF_SIZE + 1];
 	char		buf[BUFF_SIZE + 1];
 	char		*str;
 	int			ret;
 
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || fd > 256 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
 	if (ft_get_line(line, overf[fd], overf[fd]) == 1) //si overf contient deja une ligne complete
 		return (1);
